@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Lien vers la feuille de style CSS -->
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+<body>
+  <div class="container">
+    <!-- En-tête de la page -->
+    <div class="header">
+      <header>
+        <img src="logo.png" alt="Logo" class="logo">
+    </header>
+    </div>
+    <!-- Section pour ajouter une nouvelle tâche -->
+    <div class="input-section">
+      <input type="text" id="taskInput" placeholder="nouvelle tache">
+      <input type="date" id="taskDate">
+      <select id="taskPriority">
+        <option value="Basse">Basse priorité</option>
+        <option value="Moyenne">Moyenne priorité</option>
+        <option value="Haute">Haute priorité</option>
+      </select>
+      <button id="addTaskBtn">Ajouter</button>
+    </div>
+    <!-- Liste des tâches -->
+    <div id="taskList"></div>
+    <!-- Pied de page avec les boutons de filtrage -->
+    <div class="footer">
+      <button id="allTasksBtn" class="active">Tous</button>
+      <button id="activeTasksBtn">Actifs</button>
+      <button id="completedTasksBtn">Finis</button>
+    </div>
+  </div>
+
+  <!-- Lien vers le fichier JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

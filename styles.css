@@ -1,0 +1,100 @@
+/* Style pour la page */
+body{
+    margin: 0;
+    padding: 0;
+    background: white;
+}
+/* style pour le contenair principale */
+.container{
+    width: 600px;
+    border: 5px solid red;
+    padding: 10px 10px 10px 10px;
+    margin-left: 300px;
+    line-height: 100px;
+    font-style: italic;
+}
+/* style pour l'en-tete */
+.header img{
+    width: 200px;
+}
+.header{
+    margin-left: 180px;
+}
+.delete-btn{
+    border: 5px solid red;
+    background-color: rgb(206, 125, 125);
+    padding: 5px 10px 5px 10px;
+    border-radius: 6px;
+    font-style: italic;
+}
+.task-item span{
+    margin-right: 50px;
+}
+.task-item .titre{
+    width: 150px;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.task-item{
+    border-top: 2px dashed black;
+    line-height: 20px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    font-family: initial; 
+}
+.task-item button{
+}
+
+/* style pour les elements de saisie(texte, date, selecteur et boutton) */
+.input-section input[type="Text"], .input-section input[type="date"], .input-section select{
+    padding: 8px;
+    margin-right: 15px;
+    border: 5px solid black;
+    border-radius: 6px;
+    font-family: initial;
+}
+#taskList{
+    margin-right: 20px;
+    width: 600px;
+  
+}
+/* style pour le boutton de filtrage */
+.footer {
+    margin: 0 auto;
+    width: 70%;
+    /* background-color: red; */
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    
+}
+#addTaskBtn{
+    border: 5px solid rgb(37, 103, 209);
+    border-radius: 6px;
+    font-family: initial;
+    background: rgb(36, 175, 214);
+}
+input[type="checkbox"]{
+    margin-left: 5vw;
+    
+}
+.footer #allTasksBtn{
+    border: 5px solid chocolate;
+    border-radius: 6px;
+    font-family: initial;
+    margin-left: 12px;
+}
+.footer #activeTasksBtn{
+    border: 5px solid rgb(229, 255, 0);
+    /* margin-left: 100px; */
+    border-radius: 6px;
+    font-family: initial;
+}
+.footer #completedTasksBtn{
+    border: 5px solid orange;
+    /* margin-left: 200px; */
+    border-radius: 6px;
+    font-family: initial;
+}
