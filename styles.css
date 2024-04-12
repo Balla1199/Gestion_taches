@@ -62,9 +62,8 @@ body{
 }
 /* style pour le boutton de filtrage */
 .footer {
-    margin: 0 auto;
+    margin: 50px auto;
     width: 70%;
-    /* background-color: red; */
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
