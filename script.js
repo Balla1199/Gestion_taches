@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const activeTasksBtn = document.getElementById('activeTasksBtn');
   const completedTasksBtn = document.getElementById('completedTasksBtn');
 
+  // Chargement des tâches depuis le stockage local lors du chargement de la page
+  loadTasks();
+
   // Gestionnaire d'événement pour ajouter une tâche
   addTaskBtn.addEventListener('click', addTask);
 
@@ -19,19 +22,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const taskPriorityValue = taskPriority.value;
     // Vérification si le champ de texte n'est pas vide
     if (taskText !== '') {
-      // Création d'un nouvel élément de tâche
-      const taskItem = document.createElement('div');
-      taskItem.classList.add('task-item');
-      // Insertion du contenu dans l'élément de tâche
-      taskItem.innerHTML = `
-        <span class="titre">${taskText}</span>
-        <span classe= "date">Date: ${taskDateValue}</span>
-        <span>Priorité: ${taskPriorityValue}</span>
-        <button class="delete-btn">Supprimer</button>
-        <input type="checkbox">
-      `;
-      // Ajout de l'élément de tâche à la liste
-      taskList.appendChild(taskItem);
+      // Création d'un nouvel objet de tâche
+      const task = {
+        text: taskText,
+        date: taskDateValue,
+        priority: taskPriorityValue
+      };
+      // Ajout de la tâche au stockage local
+      saveTask(task);
+      // Affichage de la tâche dans l'interface utilisateur
+      renderTask(task);
       // Réinitialisation du champ de texte
       taskInput.value = '';
     }
@@ -40,60 +40,46 @@ document.addEventListener('DOMContentLoaded', function () {
   // Gestionnaire d'événement pour supprimer une tâche
   taskList.addEventListener('click', function (event) {
     if (event.target.classList.contains('delete-btn')) {
-      event.target.parentElement.remove();
+      const taskItem = event.target.parentElement;
+      const taskText = taskItem.querySelector('.titre').textContent;
+      // Suppression de la tâche du stockage local
+      removeTask(taskText);
+      // Suppression de la tâche de l'interface utilisateur
+      taskItem.remove();
     }
   });
 
-  // Gestionnaires d'événement pour les boutons de filtrage
-  allTasksBtn.addEventListener('click', function () {
-    toggleActiveButton(allTasksBtn);
-    showAllTasks();
-  });
-
-  activeTasksBtn.addEventListener('click', function () {
-    toggleActiveButton(activeTasksBtn);
-    showActiveTasks();
-  });
-
-  completedTasksBtn.addEventListener('click', function () {
-    toggleActiveButton(completedTasksBtn);
-    showCompletedTasks();
-  });
-
-  // Fonction pour basculer le bouton actif
-  function toggleActiveButton(clickedButton) {
-    const buttons = document.querySelectorAll('.footer button');
-    buttons.forEach(button => button.classList.remove('active'));
-    clickedButton.classList.add('active');
+  // Fonction pour charger les tâches depuis le stockage local
+  function loadTasks() {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.forEach(renderTask);
   }
 
-  // Fonction pour afficher toutes les tâches
-  function showAllTasks() {
-    const tasks = document.querySelectorAll('.task-item');
-    tasks.forEach(task => task.style.display = 'block');
+  // Fonction pour sauvegarder une tâche dans le stockage local
+  function saveTask(task) {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 
-  // Fonction pour afficher les tâches actives
-  function showActiveTasks() {
-    const tasks = document.querySelectorAll('.task-item');
-    tasks.forEach(task => {
-      if (!task.querySelector('input[type="checkbox"]').checked) {
-        task.style.display = 'block';
-      } else {
-        task.style.display = 'none';
-      }
-    });
+  // Fonction pour supprimer une tâche du stockage local
+  function removeTask(taskText) {
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks = tasks.filter(task => task.text !== taskText);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 
-  // Fonction pour afficher les tâches terminées
-  function showCompletedTasks() {
-    const tasks = document.querySelectorAll('.task-item');
-    tasks.forEach(task => {
-      if (task.querySelector('input[type="checkbox"]').checked) {
-        task.style.display = 'block';
-      } else {
-        task.style.display = 'none';
-      }
-    });
+  // Fonction pour afficher une tâche dans l'interface utilisateur
+  function renderTask(task) {
+    const taskItem = document.createElement('div');
+    taskItem.classList.add('task-item');
+    taskItem.innerHTML = `
+      <span class="titre">${task.text}</span>
+      <span class="date">Date: ${task.date}</span>
+      <span>Priorité: ${task.priority}</span>
+      <button class="delete-btn">Supprimer</button>
+      <input type="checkbox">
+    `;
+    taskList.appendChild(taskItem);
   }
 });
